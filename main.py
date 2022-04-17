@@ -2,7 +2,7 @@ import logging
 import datetime
 import telebot
 from telebot import types
-from decouple import config # you must create .env file
+from decouple import config  # you must create .env file
 from bots_requests.api_request import Request
 from db.database_sql import (read_data_base,
                              db_table_history,

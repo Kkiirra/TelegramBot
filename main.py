@@ -17,7 +17,7 @@ logging.basicConfig(filename='.log', level=logging.INFO, filemode='a')
 
 
 @bot.message_handler(content_types=['text'])
-def get_text_messages(message) -> None:
+def get_text_messages(message: telebot.types.Message) -> None:
     """A function that receives requests from the user."""
     user_message = message.text.strip().lower()
     users_data[message.from_user.id] = {'hotels_max': None, 'distance': None, 'prices': None, 'command_name': None,
@@ -68,7 +68,7 @@ def get_text_messages(message) -> None:
         bot.send_message(message.from_user.id, 'Enter the command /help')
 
 
-def citi_function(message) -> None:
+def citi_function(message: telebot.types.Message) -> None:
     """A function that for first checks if our database contains information about a given city and its hotels,
     in order to do not make a request again, if there is no information about the hotel, then an instance of the
     Request class is created, and the record in the database about this City. """
@@ -103,7 +103,7 @@ def citi_function(message) -> None:
             bot.send_message(message.from_user.id, f'Unexpected error, please try again.')
 
 
-def hotels_max(message) -> None:
+def hotels_max(message: telebot.types.Message) -> None:
     """ A function that checks whether the user entered exactly the numbers, in a negative case, we return
     try again"""
     logging.info(f'function: hotels_max '
@@ -119,7 +119,7 @@ def hotels_max(message) -> None:
         bot.register_next_step_handler(message, hotels_max)
 
 
-def hotel_photos(message) -> None:
+def hotel_photos(message: telebot.types.Message) -> None:
     """A function that, at the request of the user, either displays photos or information about the hotel."""
     logging.info(f'function: hotel_photos '
                  f'\nuser: {message.from_user.id}'
@@ -150,9 +150,7 @@ def hotel_photos(message) -> None:
         bot.register_next_step_handler(message, hotel_photos)
 
 
-def quantity_photos(message) -> None:
-    print(message)
-    print(type(message))
+def quantity_photos(message: telebot.types.Message) -> None:
     """A function that accepts a number of photos from the user."""
     logging.info(f'function: quantity_photos '
                  f'\nuser: {message.from_user.id}'
@@ -176,7 +174,7 @@ def quantity_photos(message) -> None:
         bot.register_next_step_handler(message, quantity_photos)
 
 
-def best_deal_price(message) -> None:
+def best_deal_price(message: telebot.types.Message) -> None:
     """A function that accepts from the user a price range from the user for the command Bestdeal"""
     logging.info(f'function: best_deal_price '
                  f'\nuser: {message.from_user.id}'
@@ -198,7 +196,7 @@ def best_deal_price(message) -> None:
         bot.register_next_step_handler(message, best_deal_price)
 
 
-def best_deal_distance(message) -> None:
+def best_deal_distance(message: telebot.types.Message) -> None:
     """A function that accepts from the user a distance range for the command Bestdeal"""
     logging.info(f'function: best_deal_distance '
                  f'\nuser: {message.from_user.id}'
@@ -220,7 +218,7 @@ def best_deal_distance(message) -> None:
         bot.register_next_step_handler(message, best_deal_distance)
 
 
-def user_history(message) -> None:
+def user_history(message: telebot.types.Message) -> None:
     """."""
     logging.info(f'function: user_history '
                  f'\nuser: {message.from_user.id}'
@@ -236,7 +234,7 @@ def user_history(message) -> None:
         bot.send_message(message.from_user.id, 'No one request.')
 
 
-def function_for_hotels(sql_response, user_id, command_name, citi_name) -> None:
+def function_for_hotels(sql_response: list, user_id: int, command_name: str, citi_name: str) -> None:
     """The function to get information about hotels is based on a database (no photo)"""
     logging.info(f'function: function_for_hotels '
                  f'\nuser: {user_id}'
@@ -254,7 +252,8 @@ def function_for_hotels(sql_response, user_id, command_name, citi_name) -> None:
                      hotels_names, datetime.datetime.today(), citi_name)
 
 
-def function_for_hotels_with_photos(sql_response, user_id, command_name, citi_name, maximum_of_photos) -> None:
+def function_for_hotels_with_photos(sql_response: list,
+                                    user_id: int, command_name: str, citi_name: str, maximum_of_photos: int) -> None:
     """A function that displays information about hotels along with photos comes from a database response"""
     logging.info(f'function: function_for_hotels_with_photos '
                  f'\nuser: {user_id}'

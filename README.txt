@@ -1,6 +1,11 @@
 Hello! This bot is designed to be able to find information about hotels
 in any city thanks to a request to the Rapidapi website
 
+The project is divided into 3 parts
+1 Database queries
+2 API requests and write hotels to database
+3 main.py file that manages the whole project.
+
 We have 4 commands.
 Lowprice
 Highprice
